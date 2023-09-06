@@ -1,0 +1,9 @@
+runtime: python39
+entrypoint: gunicorn -b :$PORT app:app
+
+env_variables:
+  CLOUDSQL_CONNECTION_NAME: 'main-campaign-398107:europe-west6:benutzer'
+  DB_USER: 'root'
+  DB_PASSWORD: 'IFA'
+  DB_NAME: 'benutzer'
+
