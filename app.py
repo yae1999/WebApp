@@ -22,13 +22,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-#Klasse Benutzer deklarieren - Angelehnt von MicroBlog
+#Klasse Benutzer deklarieren - Angelehnt an MicroBlog
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
 
-#Klasse Eintraege deklarieren - Angelehnt von MicroBlog
+#Klasse Eintraege deklarieren - Angelehnt an MicroBlog
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
@@ -38,7 +38,7 @@ class Entry(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Registrierung eines neuen Benutzers - Angelehnt von MicroBlog
+# Registrierung eines neuen Benutzers - Angelehnt an MicroBlog
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -54,7 +54,7 @@ def register():
 
     return render_template('register.html')
 
-#Anmelden eines neuen Benutzers - Angelehnt von MicroBlog
+#Anmelden eines neuen Benutzers - Angelehnt an MicroBlog
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -70,21 +70,21 @@ def login():
 
     return render_template('login.html')
 
-#Logout Vorgang eines Benutzers - Angelehnt von MicroBlog
+#Logout Vorgang eines Benutzers - Angelehnt an MicroBlog
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-#Root Seite der App - Angelehnt von MicroBlog
+#Root Seite der App - Angelehnt an MicroBlog
 @app.route('/')
 @login_required
 def index():
     entries = Entry.query.filter_by(user_id=current_user.id).all()
     return render_template('index.html', entries=entries)
 
-#neuen Tagebuch Eintrag erstellen - Angelehnt von MicroBlog
+#neuen Tagebuch Eintrag erstellen - Angelehnt an MicroBlog
 @app.route('/add', methods=['POST'])
 @login_required
 def add():
