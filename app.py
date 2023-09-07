@@ -1,5 +1,3 @@
-#Enis's Tagebuch inspiriert von MicroBlog 
-
 # app.py
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -24,12 +22,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-
+#Klasse Benutzer deklarieren - Angelehnt von MicroBlog
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
 
+#Klasse Eintraege deklarieren - Angelehnt von MicroBlog
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
@@ -39,7 +38,7 @@ class Entry(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Registrierung eines neuen Benutzers
+# Registrierung eines neuen Benutzers - Angelehnt von MicroBlog
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -55,7 +54,7 @@ def register():
 
     return render_template('register.html')
 
-#Anmelden eines neuen Benutzers
+#Anmelden eines neuen Benutzers - Angelehnt von MicroBlog
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -71,21 +70,21 @@ def login():
 
     return render_template('login.html')
 
-#Logout Vorgang eines Benutzers
+#Logout Vorgang eines Benutzers - Angelehnt von MicroBlog
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-#Root Seite der App
+#Root Seite der App - Angelehnt von MicroBlog
 @app.route('/')
 @login_required
 def index():
     entries = Entry.query.filter_by(user_id=current_user.id).all()
     return render_template('index.html', entries=entries)
 
-#neuen Tagebuch Eintrag erstellen
+#neuen Tagebuch Eintrag erstellen - Angelehnt von MicroBlog
 @app.route('/add', methods=['POST'])
 @login_required
 def add():
